@@ -1,0 +1,415 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Kosugi+Maru&display=swap');
+
+:root {
+	--bg-top: #fff9fc;
+	--bg-mid: #f8edf2;
+	--bg-bottom: #eef5fb;
+	--ink: #3f3855;
+	--muted: #77728f;
+	--line: rgba(115, 108, 148, 0.16);
+	--card: #fffdfd;
+	--card-soft: #fbf7fa;
+	--blue: #8bb0df;
+	--pink: #e8a0b4;
+	--pink-deep: #cf6f8f;
+	--gold: #e8c781;
+	--shadow: 0 14px 30px rgba(105, 105, 136, 0.1);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	position: relative;
+	min-height: 100vh;
+	margin: 0;
+	padding: 32px 20px 48px;
+	overflow-x: hidden;
+	background:
+		radial-gradient(circle at top left, rgba(255, 255, 255, 0.9) 0, rgba(255, 255, 255, 0) 26%),
+		linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 46%, var(--bg-bottom) 100%);
+	color: var(--ink);
+	font-family: "M PLUS Rounded 1c", "Trebuchet MS", sans-serif;
+}
+
+body::before,
+body::after {
+	content: "";
+	position: fixed;
+	z-index: -1;
+	pointer-events: none;
+	border-radius: 50%;
+}
+
+body::before {
+	top: 58px;
+	right: 64px;
+	width: 180px;
+	height: 180px;
+	background: radial-gradient(circle, rgba(255, 196, 214, 0.26) 0%, rgba(255, 196, 214, 0) 70%);
+}
+
+body::after {
+	left: 42px;
+	bottom: 54px;
+	width: 150px;
+	height: 150px;
+	background: radial-gradient(circle, rgba(153, 196, 240, 0.22) 0%, rgba(153, 196, 240, 0) 72%);
+}
+
+.tabs {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	margin: 0 auto 28px;
+	padding: 12px 18px;
+	border: 1px solid rgba(214, 204, 224, 0.6);
+	border-radius: 999px;
+	background: rgba(255, 252, 253, 0.92);
+	box-shadow: 0 8px 22px rgba(128, 134, 183, 0.1);
+}
+
+.separator {
+	font-size: 20px;
+	color: rgba(128, 122, 157, 0.65);
+}
+
+.tab {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 10px 18px;
+	border: 0;
+	border-radius: 999px;
+	background: transparent;
+	color: var(--muted);
+	font-family: "Kosugi Maru", "M PLUS Rounded 1c", sans-serif;
+	font-size: 18px;
+	letter-spacing: 0.02em;
+	cursor: pointer;
+	transition: color 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
+}
+
+.cart-tab::after {
+	content: attr(data-goods-count);
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	min-width: 24px;
+	height: 24px;
+	padding: 0 7px;
+	border: 2px solid rgba(255, 255, 255, 0.95);
+	border-radius: 999px;
+	background: #ef789d;
+	box-shadow: 0 6px 14px rgba(208, 111, 143, 0.2);
+	color: white;
+	font-size: 12px;
+	font-weight: 700;
+	transform-origin: center;
+}
+
+.cart-bump::after {
+	animation: cart-bump 0.45s ease;
+}
+
+.tab.active {
+	pointer-events: none;
+	color: #42618f;
+	background: #eef4fb;
+}
+
+.tab:hover {
+	color: #4a4370;
+	transform: translateY(-1px);
+	background: #f8f4f7;
+}
+
+.product-items,
+.cart-items {
+	width: min(1120px, 100%);
+	margin: 0 auto;
+}
+
+.product-items {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	gap: 24px;
+	align-items: start;
+}
+
+.product-item {
+	position: relative;
+	border: 1px solid var(--line);
+	border-radius: 28px;
+	background: var(--card);
+	box-shadow: var(--shadow);
+	text-align: center;
+	overflow: hidden;
+	transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.product-item::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background:
+		linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+	pointer-events: none;
+}
+
+.product-item:hover {
+	transform: translateY(-5px);
+	border-color: rgba(197, 152, 171, 0.34);
+	box-shadow: 0 18px 34px rgba(122, 123, 170, 0.16);
+}
+
+.product-item-added {
+	animation: product-added 0.45s ease;
+}
+
+.product-item img {
+	display: block;
+	width: 100%;
+	height: 250px;
+	object-fit: cover;
+	object-position: center;
+}
+
+.product-list {
+	position: relative;
+	padding: 18px 18px 20px;
+	background: var(--card-soft);
+}
+
+.product-list h3 {
+	margin: 0 0 12px;
+	font-family: "Kosugi Maru", "M PLUS Rounded 1c", sans-serif;
+	font-size: 19px;
+	font-weight: 400;
+	line-height: 1.35;
+	color: var(--ink);
+}
+
+.price {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 0 16px;
+	padding: 7px 12px;
+	border-radius: 999px;
+	background: #f6ead0;
+	color: #8b6430;
+	font-size: 15px;
+	font-weight: 700;
+}
+
+.button {
+	padding: 11px 18px;
+	border: none;
+	border-radius: 16px;
+	background: #8faad5;
+	box-shadow: 0 8px 18px rgba(131, 160, 228, 0.18);
+	color: white;
+	font-family: "Kosugi Maru", "M PLUS Rounded 1c", sans-serif;
+	font-size: 13px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.button:hover {
+	transform: translateY(-2px);
+	background: #7f9ecf;
+	box-shadow: 0 12px 22px rgba(131, 160, 228, 0.2);
+}
+
+.cart-items {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	padding: 22px;
+	border: 1px solid rgba(214, 204, 224, 0.55);
+	border-radius: 30px;
+	background: rgba(255, 252, 253, 0.96);
+	box-shadow: var(--shadow);
+}
+
+.cart-item {
+	display: grid;
+	grid-template-columns: minmax(0, 2fr) minmax(120px, 0.8fr) minmax(140px, 1fr);
+	align-items: center;
+	gap: 14px;
+	padding: 16px 18px;
+	border: 1px solid rgba(135, 143, 187, 0.12);
+	border-radius: 20px;
+	background: #fdfbfd;
+}
+
+.cart-item-title {
+	font-family: "Kosugi Maru", "M PLUS Rounded 1c", sans-serif;
+	font-size: 18px;
+	color: var(--ink);
+}
+
+.cart-item-count {
+	justify-self: center;
+	padding: 6px 12px;
+	border-radius: 999px;
+	background: #edf3fb;
+	color: #3e5f92;
+	font-weight: 700;
+}
+
+.cart-item-price {
+	justify-self: end;
+	color: #8d5670;
+	font-size: 17px;
+	font-weight: 700;
+}
+
+.cart-total-price {
+	align-self: flex-end;
+	margin-top: 4px;
+	padding: 14px 18px;
+	border-radius: 18px;
+	background: #f5e8d1;
+	color: #6f4f2b;
+	font-family: "Kosugi Maru", "M PLUS Rounded 1c", sans-serif;
+	font-size: 20px;
+	font-weight: 700;
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+}
+
+.cart-popup {
+	position: fixed;
+	top: 24px;
+	right: 24px;
+	z-index: 20;
+	padding: 12px 18px;
+	border-radius: 16px;
+	background: rgba(255, 252, 253, 0.97);
+	box-shadow: 0 16px 28px rgba(111, 132, 177, 0.18);
+	color: #42618f;
+	font-family: "Kosugi Maru", "M PLUS Rounded 1c", sans-serif;
+	font-size: 15px;
+	font-weight: 700;
+	opacity: 0;
+	transform: translateY(-10px) scale(0.96);
+	transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.cart-popup.visible {
+	opacity: 1;
+	transform: translateY(0) scale(1);
+}
+
+.flying-product {
+	position: absolute;
+	z-index: 15;
+	object-fit: cover;
+	border-radius: 24px;
+	box-shadow: 0 18px 36px rgba(111, 132, 177, 0.22);
+	pointer-events: none;
+	animation: fly-to-cart 0.8s cubic-bezier(0.2, 0.75, 0.2, 1) forwards;
+}
+
+@keyframes cart-bump {
+	0% {
+		transform: scale(1);
+	}
+	35% {
+		transform: scale(1.28) translateY(-4px);
+	}
+	65% {
+		transform: scale(0.92);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+@keyframes product-added {
+	0% {
+		transform: scale(1);
+	}
+	45% {
+		transform: scale(1.035);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+@keyframes fly-to-cart {
+	0% {
+		opacity: 0.95;
+		transform: translate(0, 0) scale(1);
+	}
+	100% {
+		opacity: 0.15;
+		transform: translate(var(--fly-x), var(--fly-y)) scale(0.16);
+	}
+}
+
+@media (max-width: 720px) {
+	body {
+		padding: 18px 14px 34px;
+	}
+
+	body::before {
+		width: 120px;
+		height: 120px;
+		top: 18px;
+		right: 10px;
+	}
+
+	body::after {
+		width: 100px;
+		height: 100px;
+		left: 10px;
+		bottom: 18px;
+	}
+
+	.tabs {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+		padding: 10px 12px;
+	}
+
+	.tab {
+		font-size: 16px;
+		padding: 10px 14px;
+	}
+
+	.product-items {
+		gap: 18px;
+	}
+
+	.product-item img {
+		height: 220px;
+	}
+
+	.cart-items {
+		padding: 16px;
+	}
+
+	.cart-item {
+		grid-template-columns: 1fr;
+		justify-items: start;
+	}
+
+	.cart-item-count,
+	.cart-item-price,
+	.cart-total-price {
+		justify-self: start;
+	}
+
+	.cart-popup {
+		top: 16px;
+		right: 14px;
+		font-size: 14px;
+	}
+}
